@@ -12,13 +12,16 @@ class GamePage extends React.Component{
     this.state = {
       show:true,
       gameUi:false,
-      cards:true,
+      cards:false,
       isFlipped1:false,
       isFlipped2:false,
       isFlipped3:false,
       isFlipped4:false
     }; 
   this.handleClick = this.handleClick.bind(this);
+  this.handleClick2 = this.handleClick2.bind(this);
+  this.handleClick3 = this.handleClick3.bind(this);
+  this.handleClick4 = this.handleClick4.bind(this);
   // this.cards = this.cards.bind(this);
   
   
@@ -30,10 +33,7 @@ class GamePage extends React.Component{
     var Wpool = localStorage.getItem('pool');
     e.preventDefault();
     this.setState(prevState => ({
-      isFlipped1: !prevState.isFlipped1,
-      isFlipped2: !prevState.isFlipped2,
-      isFlipped3: !prevState.isFlipped3,
-      isFlipped4: !prevState.isFlipped4,
+      isFlipped1: !prevState.isFlipped1
     }));
     if (this.state.isFlipped1){
       alert("You Won!");
@@ -41,25 +41,51 @@ class GamePage extends React.Component{
       var earnings = round * 10;
       localStorage.setItem("pool", earnings);
       window.location.reload(false);
-    } else if (this.state.isFlipped1){
+    }
+
+  }
+  handleClick2(e){
+    var Wpool = localStorage.getItem('pool');
+    e.preventDefault();
+    this.setState(prevState => ({
+      isFlipped2: !prevState.isFlipped2
+    }));
+    if (this.state.isFlipped2){
       alert("You Won!");
       var round = localStorage.getItem('round');
       var earnings = round * 5;
       localStorage.setItem("pool", earnings);
       window.location.reload(false);
-    }else if (this.state.isFlipped1){
+    }
+  }
+  handleClick3(e){
+    var Wpool = localStorage.getItem('pool');
+    e.preventDefault();
+    this.setState(prevState => ({
+      isFlipped3: !prevState.isFlipped3
+    }));
+    if (this.state.isFlipped3){
       alert("You Won!");
       var round = localStorage.getItem('round');
       var earnings = round * 2;
       localStorage.setItem("pool", earnings);
       window.location.reload(false);
-    }else if(this.state.isFlipped4){
+    }
+  }
+  handleClick4(e){
+    var Wpool = localStorage.getItem('pool');
+    e.preventDefault();
+    this.setState(prevState => ({
+      isFlipped4: !prevState.isFlipped4
+    }));
+    if (this.state.isFlipped4){
       alert("You Lose!");
+      var round = localStorage.getItem('round');
+      var earnings = round * 0;
       localStorage.setItem("pool", 0);
       window.location.reload(false);
     }
   }
-
   // }
 
   // -------------------------------Decissison Changes-------------------------------- 
@@ -88,9 +114,8 @@ class GamePage extends React.Component{
   draw(){
     // var curRound = localStorage.getItem("round");
     // localStorage.setItem("round", curRound + 1);
-    // this.setState({
-    //   cards:!this.state.cards
-    // });
+    this.setState({cards:!this.state.cards
+    });
    
     
   }
@@ -101,9 +126,6 @@ class GamePage extends React.Component{
     localStorage.setItem('pool', wPool);
     //restart ui
     this.setState(prevState => ({show:!this.state.show}));
-  }
-  game(){
-    // if (this.state.isFlipped1)
   }
 
   // -------------------------------Game Loop--------------------------------
@@ -166,7 +188,7 @@ class GamePage extends React.Component{
                 <div>
                   <a> Draw Cards or Forfeit?</a>
                   <div className="flexbox-container">
-                    <button onClick={this.draw}> Draw </button>
+                    <button onClick={() => this.draw()}> Draw </button>
                     <button onClick={this.forfeit}> Forfeit</button>
                   </div>
                 </div>
@@ -189,17 +211,17 @@ class GamePage extends React.Component{
                     <a> <Card rank="T" suit="S" /> </a>
                     </div>
                 </ReactCardFlip>
-                <ReactCardFlip isFlipped ={this.state.isFlipped2} flipDirections="vertical">
+                <ReactCardFlip isFlipped2 ={this.state.isFlipped2} flipDirections="vertical">
                     <div>
-                      <a onClick={this.handleClick}><Card rank="0" suit="" /> </a>
+                      <a onClick={this.handleClick2}><Card rank="0" suit="" /> </a>
                     </div>
                     <div>
                     <a > <Card rank="5" suit="S" /> </a>
                     </div>
                 </ReactCardFlip>
-                <ReactCardFlip isFlipped3 ={this.state.isFlipped3} flipDirections="vertical">
+                <ReactCardFlip isFlipped ={this.state.isFlipped3} flipDirections="vertical">
                     <div>
-                      <a onClick={this.handleClick}><Card color="black" rank="0" suit="" /> </a>
+                      <a onClick={this.handleClick3}><Card color="black" rank="0" suit="" /> </a>
                     </div>
                     <div>
                     <a> <Card rank="2" suit="S" /> </a>
@@ -207,7 +229,7 @@ class GamePage extends React.Component{
                 </ReactCardFlip>
                 <ReactCardFlip isFlipped4 ={this.state.isFlipped4} flipDirections="vertical">
                     <div>
-                      <a onClick={this.handleClick}><Card rank="0" suit="" /> </a>
+                      <a onClick={this.handleClick4}><Card rank="0" suit="" /> </a>
                     </div>
                     <div>
                     <a> <Card rank="J" suit="S" /> </a>
